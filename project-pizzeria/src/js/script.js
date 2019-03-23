@@ -81,23 +81,63 @@
   };
 
   class Product {
-      constructor(id, data){
-        const thisProduct = this;
-        thisProduct.id = id;
-        thisProduct.data = data;
-        thisProduct.renderInMenu();
-        console.log('new Product:', thisProduct);
-      }
+    constructor(id, data){
+      const thisProduct = this;
+      thisProduct.id = id;
+      thisProduct.data = data;
+      thisProduct.renderInMenu();
+      thisProduct.initAccordion();
+      console.log('new Product:', thisProduct);
+    }
 
-      renderInMenu() {
-        const thisProduct = this;
+    renderInMenu() {
+      const thisProduct = this;
 
-        /* generate HTML */
-        /* create element utils.createElementFromHTML */
-        /* find menu container */
-        /* add element to menu */
+      /* generate HTML */
+      const generatedHTML = templates.menuProduct(thisProduct.data);
+      /* create element utils.createElementFromHTML */
+      thisProduct.element = utils.createDOMFromHTML(generatedHTML);
+      /* find menu container */
+      const menuContainer = document.querySelector(select.containerOf.menu);
+      /* add element to menu */
+      menuContainer.appendChild(thisProduct.element);
 
-      }
+    }
+
+    initAccordion() {
+      const thisProduct = this;
+      thisProduct.element.addEventListener('click', function(event) {
+        event.preventDefault();
+        thisProduct.element.querySelector(select.menuProduct.clickable).classList.toggle(classNames.menuProduct.wrapperActive);
+        for (let product in document.querySelectorAll(select.all.menuProductsActive)) {
+          if (!product === thisProduct.element) {
+            product.classList.remove(classNames.menuProduct.wrapperActive);
+          }
+        }
+      });
+    /* find the clickable trigger (the element that should react to clicking) */
+
+    /* START: click event listener to trigger */
+
+      /* prevent default action for event */
+
+      /* toggle active class on element of thisProduct */
+
+      /* find all active products */
+
+      /* START LOOP: for each active product */
+
+        /* START: if the active product isn't the element of thisProduct */
+
+          /* remove class active for the active product */
+
+        /* END: if the active product isn't the element of thisProduct */
+
+      /* END LOOP: for each active product */
+
+    /* END: click event listener to trigger */
+
+    }
   }
 
   app.init();
