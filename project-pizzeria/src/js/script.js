@@ -176,11 +176,21 @@
       console.log('processOrder');
       const formData = utils.serializeFormToObject(thisProduct.form);
       console.log('formData', formData);
-      //const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
+      let price = thisProduct.data.price;
 
-      /* START IF: if option is selected and option is not default */
-      //if(optionSelected && !option.default){
-      // ...
+      for (let paramId in thisProduct.data.params) {
+        const param = thisProduct.data.params[paramId];
+        for (let optionId in param.options) {
+          const option = param.options[optionId];
+          const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
+          if (optionSelected && !option.default) {
+            price += option.price;
+          } else if (!optionSelected && option.default) {
+            price = price - option.price;
+          }
+        }
+      }
+      thisProduct.priceElem = price;
     }
   }
 
