@@ -313,7 +313,7 @@
     add(menuProduct) {
 
       /* generate HTML */
-      const generatedHTML = templates.cartProduct(menuProduct.data);
+      const generatedHTML = templates.cartProduct(menuProduct);
       /* create element utils.createElementFromHTML */
       this.cartElement = utils.createDOMFromHTML(generatedHTML);
       /* find menu container */
