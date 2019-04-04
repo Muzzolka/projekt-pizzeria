@@ -1,6 +1,5 @@
 import { select, templates } from '../settings.js';
-import { utils } from '../utils.js';
-import { AmountWidget } from './AmountWidget';
+import { AmountWidget } from './AmountWidget.js';
 
 export class Booking {
   constructor(widget) {
@@ -14,7 +13,7 @@ export class Booking {
     this.dom = {};
     this.dom.wrapper = widget;
 
-    const generatedDOM = utils.createDOMFromHTML(this.dom.wrapper);
+    this.dom.wrapper.innerHTML = generatedHTML;
     this.dom.peopleAmount = this.dom.wrapper.querySelector(select.booking.peopleAmount);
     this.dom.hoursAmount = this.dom.wrapper.querySelector(select.booking.hoursAmount);
   }
