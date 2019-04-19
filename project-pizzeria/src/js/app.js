@@ -27,7 +27,7 @@ const app = {
         return rawResponse.json();
       })
       .then(function(parsedResponse) {
-        console.log(parsedResponse);
+        //console.log(parsedResponse);
       });
 
   },

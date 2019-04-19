@@ -13,7 +13,7 @@ export class Product {
     this.initOrderForm();
     this.initAmountWidget();
     this.processOrder();
-    console.log('new Product:', thisProduct);
+    //console.log('new Product:', thisProduct);
   }
 
   addToCart() {
@@ -134,9 +134,9 @@ export class Product {
       }
     }
     thisProduct.priceSingle = price;
-    console.log(this.amountWidget.value);
+    //console.log(this.amountWidget.value);
     thisProduct.price = thisProduct.priceSingle * this.amountWidget.value;
-    console.log(thisProduct.price);
+    //console.log(thisProduct.price);
     thisProduct.priceElem.innerHTML = thisProduct.price;
   }
 
