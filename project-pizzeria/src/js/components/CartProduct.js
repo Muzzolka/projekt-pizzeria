@@ -14,6 +14,15 @@ export class CartProduct {
     this.initActions();
   }
 
+  getData() {
+    return {
+      id: this.id,
+      amount: this.amount,
+      price: this.price,
+      proceSingle: this.priceSingle,
+    }
+  }
+
   getElements(element) {
     this.dom = {};
     this.dom.wrapper = element;
@@ -35,12 +44,12 @@ export class CartProduct {
 
   initActions() {
     const thisCartProduct = this;
-    this.thisCartProduct.dom.edit.addEventListener('click', function(event) {
+    thisCartProduct.dom.edit.addEventListener('click', function(event) {
+      event.preventDefault();
+    });
+    thisCartProduct.dom.remove.addEventListener('click', function(event) {
       event.preventDefault();
       thisCartProduct.remove();
-    });
-    this.thisCartProduct.dom.remove.addEventListener('click', function(event) {
-      event.preventDefault();
     });
   }
 

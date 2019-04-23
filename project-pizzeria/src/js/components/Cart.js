@@ -1,4 +1,4 @@
-import { select, classNames, templates } from '../settings.js';
+import { select, classNames, templates, settings } from '../settings.js';
 import { utils } from '../utils.js';
 import { CartProduct } from './CartProduct.js';
 
@@ -40,13 +40,17 @@ export class Cart {
     for (let key of this.renderTotalKeys){
       this.dom[key] = this.dom.wrapper.querySelectorAll(select.cart[key]);
     }
+
+    this.dom.form = this.dom.wrapper.querySelector(select.cart.form);
+    this.dom.phone = this.dom.wrapper.querySelector(select.cart.phone);
+    this.dom.address = this.dom.wrapper.querySelector(select.cart.address);
   }
 
   remove(cartProduct) {
     const thisCart = this;
     const index = thisCart.products.indexOf(cartProduct);
     thisCart.products.splice(index);
-    var elem = document.querySelector(cartProduct.dom.wrapper);
+    var elem = cartProduct.dom.wrapper;
     elem.parentNode.removeChild(elem);
     thisCart.update();
   }
@@ -62,6 +66,10 @@ export class Cart {
     });
     thisCart.dom.productList.addEventListener('remove', function(event) {
       thisCart.remove(event.detail.cartProduct);
+    });
+    thisCart.dom.form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      thisCart.sendOrder();
     });
   }
 
@@ -84,5 +92,38 @@ export class Cart {
         elem.innerHTML = thisCart[key];
       }
     }
+  }
+
+  sendOrder() {
+    const thisCart = this;
+    const url = settings.db.url + '/' + settings.db.order;
+
+    const payload = {
+      address: thisCart.dom.address.innerHTML,
+      totalNumber: thisCart.totalNumber,
+      subtotalPrice: thisCart.subtotalPrice,
+      deliveryFree: thisCart.deliveryFree,
+      totalPrice: thisCart.totalPrice,
+      products: {},
+    };
+
+    for (let product in thisCart.products) {
+      payload.products.push(product.getData());
+    }
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+
+    fetch(url, options)
+      .then(function(response) {
+        return response.json();
+      }).then(function(parsedResponse){
+        console.log('parsedResponse', parsedResponse);
+      });
   }
 }

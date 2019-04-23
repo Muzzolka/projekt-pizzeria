@@ -11,14 +11,14 @@ const app = {
     const thisApp = this;
     //console.log('thisApp.data', thisApp.data);
     for (let productData in thisApp.data.products) {
-      new Product(productData, thisApp.data.products[productData]);
+      new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
     }
   },
 
   initData: function(){
     const thisApp = this;
 
-    thisApp.data = dataSource;
+    thisApp.data = {};
     //we will use soon: thisApp.data = {};
     const url = settings.db.url + '/' + settings.db.product;
 
@@ -27,7 +27,8 @@ const app = {
         return rawResponse.json();
       })
       .then(function(parsedResponse) {
-        //console.log(parsedResponse);
+        thisApp.data.products = parsedResponse;
+        thisApp.initMenu();
       });
 
   },
@@ -41,7 +42,6 @@ const app = {
     //console.log('templates:', templates);
     thisApp.initPages();
     thisApp.initData();
-    thisApp.initMenu();
     this.initCart();
     this.initBooking();
   },
