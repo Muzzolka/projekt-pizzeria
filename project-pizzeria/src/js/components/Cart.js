@@ -104,10 +104,11 @@ export class Cart {
       subtotalPrice: thisCart.subtotalPrice,
       deliveryFree: thisCart.deliveryFree,
       totalPrice: thisCart.totalPrice,
-      products: {},
+      products: [],
     };
 
-    for (let product in thisCart.products) {
+    for (let product of thisCart.products) {
+      console.log(product)
       payload.products.push(product.getData());
     }
 

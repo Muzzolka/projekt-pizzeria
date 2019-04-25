@@ -20,7 +20,7 @@ export class CartProduct {
       amount: this.amount,
       price: this.price,
       proceSingle: this.priceSingle,
-    }
+    };
   }
 
   getElements(element) {
